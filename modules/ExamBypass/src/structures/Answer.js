@@ -16,21 +16,20 @@ class Answer {
         this.#data = data;
 
         this.id = this.#data.id;
+        this.canResolve = this.class === "elaboration" ? false : true;
     }
 
     get class() {
         return classes[this.#data.getWidgetClass()];
     }
 
-    get canResolve() {
-        return this.class === "elaboration" ? false : true; 
-    }
-
     resolve() {
         if(this.class === "input") {
             let answers = this.#data.props.correctAnswers;
 
-            for (let i = 0; i < answer.length; i++) {
+            this.#noAnswers(answers);
+
+            for (let i = 0; i < answers.length; i++) {
                 this.#data.element.before(this.#createElement(answers, i))
             }
         }
@@ -38,6 +37,8 @@ class Answer {
         else if(this.class === "connect") {
             let answers = this.#data.props.pairs;
             let ret = '<div style="background-color: #03a9fc; color:white; padding: 5px; margin: 0px;">Valid answers:<ol style="list-style-type: decimal; padding-left: 30px;">';
+
+            this.#noAnswers(answers);
 
             for (let i = 0; i < answer.length; i++) {
                 ret += `<li>${answers[i].l}`;
@@ -53,7 +54,9 @@ class Answer {
             let answers = this.#data.props.answers;
             let ret = '<div style="background-color: #03a9fc; color:white; padding: 5px; margin: 0px;">Valid order:<ol style="list-style-type: decimal; padding-left: 30px;">';
 
-            for (let i = 0; i < answer.length; i++) {
+            this.#noAnswers(answers);
+
+            for (let i = 0; i < answers.length; i++) {
                 ret += `<li>${answers[i].text}</li>`;
             }
 
@@ -64,7 +67,8 @@ class Answer {
 
         else if(this.class === "abcd") {
             let answers = this.#data.props.answers;
-            if(!answers) return;
+
+            this.#noAnswers(answers);
 
             for (let i = 0; i < answers.length; i++) {
                 let element = document.querySelector(`[data-wid='${this.id}']`)?.querySelectorAll(`[data-answerid='${answers[i]}']`);
@@ -78,6 +82,8 @@ class Answer {
 
         else if(this.class === "groups") {
             let groups = this.#data.props.groups;
+
+            this.#noAnswers(groups);
 
             let ret = '<div style="background-color: #03a9fc; color:white; padding: 5px; margin: 0px;">Correct grouping:<ol style="list-style-type: decimal; padding-left: 30px;">';
             for (let i = 0; i < groups.length; i++) {
@@ -98,6 +104,8 @@ class Answer {
 
         else if(this.class === "map") {
             let points = this.#data.props.points;
+
+            this.#noAnswers(points);
 
             for (let i = 0; i < points.length; i++) {
                 let { pointid, r_pointid } = points[i];
@@ -123,6 +131,15 @@ class Answer {
         return resolve ? 
         `<span style="border: 2px solid #03a9fc; background: white; color: black; padding: 5px; margin: 5px;">${answers[i]} <button style="border: none; background: none; border-left: 2px solid #03a9fc;" onclick="copy('${answers[i]}')">Copy</button></span>`
         : '<div style="background: #eb4034; color: white; padding: 5px;">Sorry, I can\'t resolve it.</div>'
+    }
+
+    #noAnswers(array) {
+        if(array.length === 0) {
+            this.#data.element.before(this.#createElement(null, null, false));
+            this.canResolve = false;
+
+            return true;
+        } else return false;
     }
 }
 
