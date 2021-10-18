@@ -1,15 +1,12 @@
 {
-  "name": "eduhacks",
+  "name": "exambypass",
   "version": "0.1.0",
-  "description": "",
+  "description": "Edupage exam bypasser, check README.md",
   "main": "src/index.js",
   "scripts": {
-    "build": "ncc build src/index.js --minify",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx webpack"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "webpack": "^5.58.2",
     "webpack-cli": "^4.9.0"
