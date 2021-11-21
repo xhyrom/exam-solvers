@@ -1,0 +1,14 @@
+{
+  "name": "exambypass",
+  "version": "0.1.0",
+  "description": "Edupage exam bypasser, check README.md",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "npx webpack"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^5.58.2",
+    "webpack-cli": "^4.9.0"
+  }
+}
