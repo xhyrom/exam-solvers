@@ -1,5 +1,3 @@
-# Edupage probably fixed this, sometimes it can give random answers. ALWAYS CHECK THEM BEFORE SUBMITTING!
-
 # For testing purposes only, don't cheat!
 # We are not responsible for abuse!
 
